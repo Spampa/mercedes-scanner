@@ -22,7 +22,7 @@ if (error) {
 
 export const nodeEnv = {
     NODE_ENV: data.NODE_ENV || "development",
-    PORT: data.PORT || 4300,
+    PORT: data.PORT || 3000,
     MERCEDES_URL: "https://mercedes-benz-certified.it/api/v1/get-searchresults.php",
     IMAGE_BASE_URL: "https://mercedes-benz-certified.it",
     RESEND_API_KEY: data.RESEND_API_KEY,

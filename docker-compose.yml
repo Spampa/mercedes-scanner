@@ -1,0 +1,23 @@
+services:
+  mercedes-scanner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mercedes-scanner
+    restart: unless-stopped
+    ports:
+      - "4300:3000"
+    environment:
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - RESEND_DOMAIN=${RESEND_DOMAIN}
+    env_file:
+      - .env
+    volumes:
+      # Persisti il database SQLite
+      - ./data:/app/data
+    networks:
+      - mercedes-network
+
+networks:
+  mercedes-network:
+    driver: bridge
