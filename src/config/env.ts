@@ -10,7 +10,8 @@ const envSchema = z.object({
         z.number().int().min(0).max(65535).optional()
     ),
     RESEND_API_KEY: z.string(),
-    RESEND_DOMAIN: z.string()
+    RESEND_DOMAIN: z.string(),
+    DOMAIN: z.string()
 })
 
 const { success, error, data } = envSchema.safeParse(process.env)
@@ -26,5 +27,6 @@ export const nodeEnv = {
     MERCEDES_URL: "https://mercedes-benz-certified.it/api/v1/get-searchresults.php",
     IMAGE_BASE_URL: "https://mercedes-benz-certified.it",
     RESEND_API_KEY: data.RESEND_API_KEY,
-    RESEND_DOMAIN: data.RESEND_DOMAIN
+    RESEND_DOMAIN: data.RESEND_DOMAIN,
+    DOMAIN: data.DOMAIN
 }

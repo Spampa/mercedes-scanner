@@ -48,7 +48,7 @@ export class EmailService {
         const carsHtml = displayCars.map(car => this.formatCarTable(car)).join('');
         const viewAllButton = hasMore ? `
             <div style="text-align: center; margin: 30px 0;">
-                <a href="${"http://localhost:3000"}/report?data=${encodeURIComponent(compressedData)}" style="display: inline-block; padding: 15px 40px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">📋 Visualizza tutte le ${cars.length} auto</a>
+                <a href="htp://${nodeEnv.DOMAIN}:${nodeEnv.PORT}/report?data=${encodeURIComponent(compressedData)}" style="display: inline-block; padding: 15px 40px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">📋 Visualizza tutte le ${cars.length} auto</a>
             </div>
         ` : '';
         
