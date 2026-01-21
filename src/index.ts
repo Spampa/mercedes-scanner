@@ -6,6 +6,7 @@ import z from "zod";
 import { CreateTrackingRequestSchema } from "./schemas/trackingRequest.js";
 import { job } from "./jobs/job.js";
 import { nodeEnv } from "./config/env.js";
+import { CompressService } from "./services/compress.service.js";
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -40,6 +41,29 @@ app.get('/tracking', (req, res) => {
 
 app.get('/create-tracking', (req, res) => {
     res.render('create-tracking')
+})
+
+app.get('/report', async (req, res) => {
+    const compressedData = req.query.data as string
+    
+    if (!compressedData) {
+        res.status(400).send('Dati mancanti')
+        return
+    }
+    
+    try {
+        const cars = await CompressService.decompress(compressedData)
+        
+        if (!cars) {
+            res.status(400).send('Impossibile decomprimere i dati')
+            return
+        }
+        
+        res.render('report', { cars, imageBaseUrl: nodeEnv.IMAGE_BASE_URL })
+    } catch (error) {
+        console.error('Errore nella decompressione:', error)
+        res.status(500).send('Errore nel caricamento del report')
+    }
 })
 
 app.use((req, res, next) => {
@@ -132,6 +156,5 @@ app.delete("/tracking-requests/:id", (req, res) => {
 
 app.listen(port, () => {
     console.log(`Server is listening on port: ${port}`)
-    console.log(`Website at: http://localhost:${4300}/`)
+    console.log(`Website at: http://localhost:${port}/`)
 })
-

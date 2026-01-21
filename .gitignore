@@ -13,6 +13,8 @@ node_modules
 *.db
 *.sqlite
 *.db-journal
+*.db-shm
+*.db-wal
 
 # Logs
 *.log

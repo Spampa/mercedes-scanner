@@ -10,77 +10,47 @@ export class EmailService {
         const imageUrl = `${IMAGE_BASE_URL}${car.photo}`;
 
         return `
-            <div style="margin-bottom: 30px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <img src="${imageUrl}" alt="${car.brand} ${car.model}" style="width: 100%; max-height: 300px; object-fit: cover;">
-                <div style="padding: 20px;">
-                    <h2 style="margin-top: 0; margin-bottom: 15px; color: #333;">${car.carline}</h2>
-                    <div style="margin-bottom: 25px;">
-                        <table style="width: 100%; border-collapse: separate; border-spacing: 15px 0;">
-                            <tr>
-                                <td style="width: 33.33%; background-color: #fff3cd; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #ffc107;">
-                                    <div style="font-size: 12px; color: #856404; font-weight: bold; margin-bottom: 4px;">💰 PREZZO</div>
-                                    <div style="font-size: 20px; font-weight: bold; color: #856404;">${car.price}€</div>
-                                </td>
-                                <td style="width: 33.33%; background-color: #d1ecf1; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #17a2b8;">
-                                    <div style="font-size: 12px; color: #0c5460; font-weight: bold; margin-bottom: 4px;">📅 IMMATRICOLAZIONE</div>
-                                    <div style="font-size: 18px; font-weight: bold; color: #0c5460;">${car.registration}</div>
-                                </td>
-                                <td style="width: 33.33%; background-color: #d4edda; padding: 12px 15px; border-radius: 6px; border-left: 4px solid #28a745;">
-                                    <div style="font-size: 12px; color: #155724; font-weight: bold; margin-bottom: 4px;">🚗 CHILOMETRI</div>
-                                    <div style="font-size: 18px; font-weight: bold; color: #155724;">${car.km.toLocaleString()} km</div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <tr style="background-color: #f9f9f9;">
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Modello</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.model}</td>
+            <div class="car-item" style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; display: flex; background-color: white;">
+                <img src="${imageUrl}" alt="${car.brand} ${car.model}" class="car-image" style="width: 200px; height: 150px; object-fit: cover;">
+                <div class="car-content" style="padding: 15px; flex: 1;">
+                    <h3 class="car-title" style="margin: 0 0 10px 0; color: #333;">${car.carline}</h3>
+                    <table class="car-info-table" style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 8px; font-weight: bold; color: #333; font-size: 13px;">Prezzo</td>
+                            <td style="padding: 8px; color: #666; font-size: 13px;">${car.price}€</td>
                         </tr>
-                                                <tr style="background-color: #f9f9f9;">
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Garanzia</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.warranty}</td>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 8px; font-weight: bold; color: #333; font-size: 13px;">Anno</td>
+                            <td style="padding: 8px; color: #666; font-size: 13px;">${car.registration}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 8px; font-weight: bold; color: #333; font-size: 13px;">KM</td>
+                            <td style="padding: 8px; color: #666; font-size: 13px;">${car.km.toLocaleString()}</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 8px; font-weight: bold; color: #333; font-size: 13px;">Cambio</td>
+                            <td style="padding: 8px; color: #666; font-size: 13px;">${car.gearbox}</td>
                         </tr>
                         <tr>
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Concessionario</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.dealer}</td>
-                        </tr>
-                        <tr style="background-color: #f9f9f9;">
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Indirizzo</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.dealerAddress}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Cambio</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.gearbox}</td>
-                        </tr>
-                        <tr style="background-color: #f9f9f9;">
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Carburante</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.fuel}</td>
-                        </tr>
-                        <tr style="background-color: #f9f9f9;">
-                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Euro</td>
-                            <td style="padding: 10px; border: 1px solid #ddd;">${car.euro}</td>
+                            <td style="padding: 8px; font-weight: bold; color: #333; font-size: 13px;">Carburante</td>
+                            <td style="padding: 8px; color: #666; font-size: 13px;">${car.fuel}</td>
                         </tr>
                     </table>
-                    <div style="margin-top: 30px;">
-                        <table style="width: 100%; border-collapse: separate; border-spacing: 20px 0;">
-                            <tr>
-                                <td style="width: 50%; text-align: center;">
-                                    <a href="${IMAGE_BASE_URL}${car.link}" style="display: block; padding: 16px 40px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Visualizza Auto</a>
-                                </td>
-                                <td style="width: 50%; text-align: center;">
-                                    <a href="${IMAGE_BASE_URL}${car.dealerLink}" style="display: block; padding: 16px 40px; background-color: #5cb85c; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Contatta Concessionario</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <a href="${IMAGE_BASE_URL}${car.link}" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">Visualizza</a>
                 </div>
             </div>
         `;
     }
 
-    private formatEmailHtml(cars: Array<MercedesCar>, welcome: boolean): string {
-        const carsHtml = cars.map(car => this.formatCarTable(car)).join('');
+    private formatEmailHtml(cars: Array<MercedesCar>, welcome: boolean, compressedData: string): string {
+        const displayCars = cars.slice(0, 5);
+        const hasMore = cars.length > 5;
+        const carsHtml = displayCars.map(car => this.formatCarTable(car)).join('');
+        const viewAllButton = hasMore ? `
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="${"http://localhost:3000"}/report?data=${encodeURIComponent(compressedData)}" style="display: inline-block; padding: 15px 40px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">📋 Visualizza tutte le ${cars.length} auto</a>
+            </div>
+        ` : '';
         
         const welcomeMessage = welcome ? `
             <div style="background-color: #d1f2eb; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #28a745;">
@@ -104,6 +74,20 @@ export class EmailService {
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>${welcome ? 'Benvenuto - Mercedes Scanner' : 'Nuove Auto Mercedes Disponibili'}</title>
+                <style>
+                    @media only screen and (max-width: 600px) {
+                        .car-item {
+                            display: block !important;
+                        }
+                        .car-image {
+                            width: 100% !important;
+                            height: 200px !important;
+                        }
+                        .car-title {
+                            font-size: 1.1rem !important;
+                        }
+                    }
+                </style>
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f5f5f5;">
                 <div style="background-color: white; padding: 30px; border-radius: 10px;">
@@ -114,6 +98,8 @@ export class EmailService {
                     <p style="text-align: center; color: #666; font-size: 16px;">
                         ${welcome ? 'Abbiamo trovato' : 'Ci sono'} ${cars.length} auto che corrispondono ai tuoi criteri di ricerca.
                     </p>
+                    ${hasMore ? `<p style="text-align: center; color: #666; font-size: 14px;">Mostrando le prime 5 auto</p>` : ''}
+                    ${viewAllButton}
                     ${carsHtml}
                     <div style="margin-top: 30px; padding: 20px; background-color: #f9f9f9; border-radius: 5px; text-align: center;">
                         <p style="margin: 0; color: #666;">
@@ -126,8 +112,8 @@ export class EmailService {
         `;
     }
 
-    sendEmail(email: string, cars: Array<MercedesCar>, welcome = false) {
-        const htmlContent = this.formatEmailHtml(cars, welcome);
+    sendEmail(compressedData: string, email: string, cars: Array<MercedesCar>, welcome = false) {
+        const htmlContent = this.formatEmailHtml(cars, welcome, compressedData);
 
         resend.emails.send({
             from: `Mercedes Scanner <update@${nodeEnv.RESEND_DOMAIN}>`,

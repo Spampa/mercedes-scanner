@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Auto Mercedes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .count {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .car-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .car-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .car-content {
+            padding: 20px;
+        }
+        .car-title {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .info-item {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+        .info-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .info-value {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+        }
+        .price-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-item {
+            color: #666;
+        }
+        .detail-item strong {
+            color: #333;
+        }
+        .dealer-info {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+        .dealer-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .dealer-address {
+            color: #666;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn-primary {
+            background: #0066cc;
+            color: white;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Report Auto Mercedes</h1>
+            <p class="count"><%= cars.length %> auto disponibili</p>
+        </div>
+        
+        <div class="grid">
+            <% cars.forEach(car => { %>
+                <div class="car-card">
+                    <img src="<%= imageBaseUrl %><%= car.photo %>" alt="<%= car.carline %>" class="car-image">
+                    <div class="car-content">
+                        <h2 class="car-title"><%= car.carline %></h2>
+                        
+                        <div class="price-tag">
+                            <%= car.price %>€
+                        </div>
+                        
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">📅 Anno</div>
+                                <div class="info-value"><%= car.registration %></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">🚗 Km</div>
+                                <div class="info-value"><%= car.km.toLocaleString() %></div>
+                            </div>
+                        </div>
+                        
+                        <div class="details">
+                            <div class="detail-item"><strong>Modello:</strong> <%= car.model %></div>
+                            <div class="detail-item"><strong>Cambio:</strong> <%= car.gearbox %></div>
+                            <div class="detail-item"><strong>Carburante:</strong> <%= car.fuel %></div>
+                            <div class="detail-item"><strong>Euro:</strong> <%= car.euro %></div>
+                            <div class="detail-item"><strong>CO2:</strong> <%= car.co2 %></div>
+                            <div class="detail-item"><strong>Garanzia:</strong> <%= car.warranty %></div>
+                        </div>
+                        
+                        <div class="dealer-info">
+                            <div class="dealer-name">🏢 <%= car.dealer %></div>
+                            <div class="dealer-address">📍 <%= car.dealerAddress %></div>
+                        </div>
+                        
+                        <div class="actions">
+                            <a href="<%= imageBaseUrl %><%= car.link %>" class="btn btn-primary" target="_blank">Visualizza Auto</a>
+                            <a href="<%= imageBaseUrl %><%= car.dealerLink %>" class="btn btn-success" target="_blank">Contatta</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>

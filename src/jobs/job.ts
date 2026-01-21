@@ -2,6 +2,7 @@ import { getCars } from "../services/mercedes.service.js";
 import { TrackingRequestService } from "../services/tracking-request.service.js";
 import { HashService } from "../services/hash.service.js";
 import { EmailService } from "../services/email.service.js";
+import { CompressService } from "../services/compress.service.js";
 
 import nodeCron from "node-cron";
 
@@ -29,6 +30,8 @@ export async function job(welcome = false) {
             return true;
         })
 
-        if(changedCars.length !== 0) { emailService.sendEmail(r.email, changedCars, welcome) }
+        if(changedCars.length !== 0) { 
+            emailService.sendEmail(await CompressService.compress(changedCars) || "", r.email, changedCars, welcome) 
+        }
     })
 }
