@@ -1,15 +1,12 @@
 import express from "express"
 import path from "path"
-import { fileURLToPath } from 'url'
 import { TrackingRequestService } from "./services/tracking-request.service.js";
+import { PriceService } from "./services/price.service.js";
 import z from "zod";
 import { CreateTrackingRequestSchema } from "./schemas/trackingRequest.js";
 import { job } from "./jobs/job.js";
 import { nodeEnv } from "./config/env.js";
 import { CompressService } from "./services/compress.service.js";
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 const app = express();
 const port = nodeEnv.PORT
@@ -21,6 +18,7 @@ app.set('views', path.join('views'))
 app.use(express.json())
 
 const trackingService = new TrackingRequestService()
+const priceService = new PriceService()
 
 // Route per le pagine
 app.get('/', (req, res) => {
@@ -152,6 +150,19 @@ app.delete("/tracking-requests/:id", (req, res) => {
     trackingService.deleteRequest(id)
     
     res.status(204).json()
+})
+
+app.get('/prices/:carId', (req,res) => {
+    const carId = req.params.carId;
+
+    const prices = priceService.getAllPricesBycarId(carId);
+
+    if(prices.length === 0) {
+        res.status(404).json({ message: `There's no tracking active for the carId: ${carId}` })
+        return;
+    }
+
+    res.status(200).json(prices)
 })
 
 app.listen(port, () => {

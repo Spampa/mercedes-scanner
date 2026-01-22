@@ -31,13 +31,11 @@ db.prepare(`
 `).run()
 
 db.prepare(`
-    CREATE TABLE IF NOT EXISTS cars_hash (
-        tracking_request_id INTEGER NOT NULL,
+    CREATE TABLE IF NOT EXISTS cars_price (
         car_id TEXT NOT NULL,
+        price TEXT NOT NULL,
         timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        hash_value TEXT NOT NULL,
-        PRIMARY KEY (tracking_request_id, car_id),
-        FOREIGN KEY (tracking_request_id) REFERENCES tracking_request(id) ON DELETE CASCADE
+        PRIMARY KEY (car_id, timestamp)
     )    
 `).run()
 

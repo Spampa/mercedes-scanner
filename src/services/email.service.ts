@@ -46,11 +46,11 @@ export class EmailService {
         const displayCars = cars.slice(0, 5);
         const hasMore = cars.length > 5;
         const carsHtml = displayCars.map(car => this.formatCarTable(car)).join('');
-        const viewAllButton = hasMore ? `
+        const viewAllButton =`
             <div style="text-align: center; margin: 30px 0;">
-                <a href="http://${nodeEnv.DOMAIN}:${nodeEnv.PORT}/report?data=${encodeURIComponent(compressedData)}" style="display: inline-block; padding: 15px 40px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">📋 Visualizza tutte le ${cars.length} auto</a>
+                <a href="http://${nodeEnv.DOMAIN}:${nodeEnv.PORT}/report?data=${encodeURIComponent(compressedData)}" style="display: inline-block; padding: 15px 40px; background-color: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">📋 Report Completo</a>
             </div>
-        ` : '';
+        `;
         
         const welcomeMessage = welcome ? `
             <div style="background-color: #d1f2eb; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #28a745;">
@@ -59,7 +59,7 @@ export class EmailService {
                     Grazie per esserti iscritto al nostro servizio di monitoraggio auto Mercedes. 
                 </p>
                 <p style="color: #155724; font-size: 16px; margin-bottom: 10px;">
-                    Ti invieremo aggiornamenti automatici ogni volta che troveremo nuove auto che corrispondono ai tuoi criteri di ricerca.
+                    Ti invieremo aggiornamenti automatici ogni volta che troveremo nuove auto che corrispondono ai tuoi criteri di ricerca oppure che calano di prezzo.
                 </p>
                 <p style="color: #155724; font-size: 16px; margin: 0;">
                     Ecco il tuo primo report con le auto attualmente disponibili:
@@ -96,7 +96,7 @@ export class EmailService {
                     </h1>
                     ${welcomeMessage}
                     <p style="text-align: center; color: #666; font-size: 16px;">
-                        ${welcome ? 'Abbiamo trovato' : 'Ci sono'} ${cars.length} auto che corrispondono ai tuoi criteri di ricerca.
+                        ${welcome ? `Abbiamo trovato ${cars.length} auto che corrispondono ai tuoi criteri di ricerca.` : `Ci sono ${cars.length} auto che sono state aggiunte oppure che sono calate di prezzo`} 
                     </p>
                     ${hasMore ? `<p style="text-align: center; color: #666; font-size: 14px;">Mostrando le prime 5 auto</p>` : ''}
                     ${viewAllButton}

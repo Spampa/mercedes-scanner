@@ -1,6 +1,6 @@
 import { getCars } from "../services/mercedes.service.js";
 import { TrackingRequestService } from "../services/tracking-request.service.js";
-import { HashService } from "../services/hash.service.js";
+import { PriceService } from "../services/price.service.js";
 import { EmailService } from "../services/email.service.js";
 import { CompressService } from "../services/compress.service.js";
 
@@ -12,8 +12,11 @@ nodeCron.schedule('0 * * * *', () => {
 })
 
 const trackingRequestService = new TrackingRequestService()
-const hashService = new HashService()
+const priceService = new PriceService()
 const emailService = new EmailService()
+
+console.log(`[${new Date().toISOString()}] Avvio iniziale - esecuzione job di monitoraggio...`)
+job()
 
 export async function job(welcome = false) {
     const trackingRequests = trackingRequestService.getAllRequests()
@@ -21,13 +24,22 @@ export async function job(welcome = false) {
     trackingRequests.forEach(async r => {
         const cars = await getCars(r.request, r.searchValue)
 
+        if(welcome) {
+            emailService.sendEmail(await CompressService.compress(cars) || "", r.email, cars, welcome) 
+            return;
+        }
+
         const changedCars = cars.filter(c => {
-            const hashCars = hashService.createHash(c)
+            const lastPrice = priceService.getLastPrice(c.id);
 
-            if (!hashService.isChanged(r.id, c.id, hashCars)) return false
-
-            hashService.addHash(r.id, c.id, hashCars)
-            return true;
+            if(!lastPrice || lastPrice > c.price){
+                priceService.addPrice(c.id, c.price)
+                return true
+            }
+            else if(lastPrice !== c.price){
+                priceService.addPrice(c.id, c.price)
+            }
+            return false;
         })
 
         if(changedCars.length !== 0) { 
