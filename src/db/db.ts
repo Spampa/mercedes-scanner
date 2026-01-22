@@ -1,13 +1,14 @@
 import Database from 'better-sqlite3';
 import type { Database as DatabaseType } from 'better-sqlite3';
 import fs from 'node:fs';
+import { nodeEnv } from '../config/env.js';
 
-const dataDir = './data';
+const dataDir = nodeEnv.DB_DATA_DIR;
 if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const db: DatabaseType = new Database('./data/mercedes.db');
+const db: DatabaseType = new Database(`${dataDir}/mercedes.db`);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 

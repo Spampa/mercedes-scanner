@@ -4,7 +4,7 @@ import { TrackingRequestService } from "./services/tracking-request.service.js";
 import { PriceService } from "./services/price.service.js";
 import z from "zod";
 import { CreateTrackingRequestSchema } from "./schemas/trackingRequest.js";
-import { job } from "./jobs/job.js";
+import { singleJob } from "./jobs/job.js";
 import { nodeEnv } from "./config/env.js";
 import { CompressService } from "./services/compress.service.js";
 
@@ -132,8 +132,9 @@ app.post("/tracking-requests", (req, res) => {
     const { email, searchValue, request } = validation.data
     const trackingRequest = trackingService.createRequest(email, searchValue ?? "", request)
     
+    singleJob(trackingRequest, true)
     res.status(201).json(trackingRequest)
-    job(true)
+    
 })
 
 app.delete("/tracking-requests/:id", (req, res) => {

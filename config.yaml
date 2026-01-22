@@ -1,0 +1,23 @@
+name: "Mercedes Scanner APP"
+version: "1.0.0"
+slug: "mercedes_scanner_app"
+description: "Mercedes Scanner APP"
+arch:
+  - aarch64
+  - amd64
+  - armv7
+startup: application
+boot: auto
+map:
+  - type: addon_config
+    read_only: false
+    path: /config
+options: {}
+schema: {}
+ports:
+  3000/tcp: 3000
+environment:
+  TZ: "Europe/Rome"
+  RESEND_API_KEY: "your_api_key_here"
+  RESEND_DOMAIN: "your_domain_here"
+  DOMAIN: "homeassistant.local"
